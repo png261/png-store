@@ -1,6 +1,6 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { Switch, useLocation } from 'react-router-dom';
 import Loading from 'src/components/Loading/Loading';
 import { PATH } from 'src/constants/paths';
 import Guard from 'src/guards/Guard';
@@ -10,6 +10,15 @@ const LostPassword = lazy(() => import('src/pages/LostPassword/LostPassword'));
 
 const LoginRoutes = () => {
 	const user = useSelector((state) => state.user);
+	const history = useLocation();
+	const [redirectURL, setRedirectURL] = useState(PATH.HOME);
+
+	useEffect(() => {
+		const excludeURL = [PATH.LOGIN, PATH.SIGNUP, PATH.LOST_PASS];
+		if (!excludeURL.includes(history.pathname)) {
+			setRedirectURL(history.pathname);
+		}
+	}, [history]);
 
 	return (
 		<Switch>
@@ -17,7 +26,7 @@ const LoginRoutes = () => {
 				exact
 				condition={!user}
 				path={PATH.LOGIN}
-				redirect={PATH.HOME}
+				redirect={redirectURL}
 			>
 				<Suspense fallback={<Loading />}>
 					<Login />
@@ -27,7 +36,7 @@ const LoginRoutes = () => {
 				exact
 				condition={!user}
 				path={PATH.SIGNUP}
-				redirect={PATH.HOME}
+				redirect={redirectURL}
 			>
 				<Suspense fallback={<Loading />}>
 					<SignUp />
@@ -37,7 +46,7 @@ const LoginRoutes = () => {
 				exact
 				condition={!user}
 				path={PATH.LOST_PASS}
-				redirect={PATH.HOME}
+				redirect={redirectURL}
 			>
 				<Suspense fallback={<Loading />}>
 					<LostPassword />

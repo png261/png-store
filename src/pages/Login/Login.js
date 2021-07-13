@@ -1,5 +1,5 @@
 import { ErrorMessage, FastField, Form, Formik } from 'formik';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Button from 'src/components/Button/Button.styles';
 import { PATH } from 'src/constants/paths';
 import InputField from 'src/custom-fields/InputField/InputField';
@@ -13,6 +13,8 @@ import * as Yup from 'yup';
 import { FormGroup, LostPass, Socials, Wrapper } from './Login.styles';
 
 const Login = () => {
+	const history = useHistory();
+
 	const initialValues = {
 		email: '',
 		password: '',
@@ -24,7 +26,7 @@ const Login = () => {
 
 	const handleSubmit = ({ email, password }) => {
 		auth.signInWithEmailAndPassword(email, password)
-			.then()
+			.then(history.goBack())
 			.catch((error) => {
 				alert(error);
 			});
