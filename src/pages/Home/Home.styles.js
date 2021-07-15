@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div``;
 
 export const Welcome = styled.div`
-	min-height: 70vh;
 	height: max-content;
 	display: flex;
 	flex-direction: column;
