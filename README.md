@@ -1,2 +1,2 @@
 ## Todo
-- [ ] add flash loading 
+- [ ] add content loader 
