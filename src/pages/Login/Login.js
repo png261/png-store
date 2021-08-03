@@ -32,10 +32,7 @@ const Login = () => {
 			});
 	};
 
-	const signIn = (option = 'google') => {
-		const provider =
-			option === 'facebook' ? facebookProvider : googleProvider;
-
+	const signIn = (provider) => {
 		auth.signInWithPopup(provider)
 			.then((result) => {
 				const uid = result.user.uid;
@@ -49,8 +46,8 @@ const Login = () => {
 			})
 			.catch((error) => alert(error));
 	};
-	const signInWithFb = () => () => signIn('facebook');
-	const signInWithGoogle = signIn;
+	const signInWithFb = () => signIn(facebookProvider);
+	const signInWithGoogle = () => signIn(googleProvider);
 
 	return (
 		<Wrapper>
