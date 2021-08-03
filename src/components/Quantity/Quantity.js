@@ -9,12 +9,12 @@ const Quantity = ({ callBack, initValue = 1, ...pops }) => {
 
 	const changeQuantity = (newQuantity) => {
 		if (!newQuantity) return setQuantity(1);
-
 		newQuantity = Number(newQuantity);
-		if (!newQuantity) return;
+
 		if (newQuantity > 99 || newQuantity < 1) {
 			return (newQuantity = quantity);
 		}
+
 		return setQuantity(newQuantity);
 	};
 
@@ -27,11 +27,13 @@ const Quantity = ({ callBack, initValue = 1, ...pops }) => {
 
 		if (quantity === 99) setIsMax(true);
 		if (quantity === 1) setIsMin(true);
+
 		return () => {
 			setIsMax(false);
 			setIsMin(false);
 		};
-	}, [quantity]);
+	}, [quantity, callBack]);
+
 	return (
 		<Wrapper {...pops}>
 			<button onClick={decrease} disabled={isMin}>

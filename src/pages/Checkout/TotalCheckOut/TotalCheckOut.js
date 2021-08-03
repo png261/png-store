@@ -7,31 +7,32 @@ const TotalCheckOut = ({ cartProducts }) => {
 	const [subTotal, setSubTotal] = useState(0);
 	const shippingPrice = 20;
 
-	const getSubTotal = () => {
-		if (!allProducts) return 0;
-
-		const products = allProducts
-			.filter(({ id }) =>
-				cartProducts.some((cartProduct) => cartProduct.id.includes(id))
-			)
-			.map(({ id, price }) => {
-				const quantity = cartProducts.find(
-					(cartProduct) => id === cartProduct.id
-				).quantity;
-				return { quantity, price };
-			});
-
-		const subTotal = products.reduce(
-			(total, { quantity, price }) => total + price * quantity,
-			0
-		);
-
-		return subTotal;
-	};
-
 	useEffect(() => {
-		const subTotal = getSubTotal();
-		setSubTotal(subTotal);
+		const getSubTotal = () => {
+			if (!allProducts) return 0;
+
+			const products = allProducts
+				.filter(({ id }) =>
+					cartProducts.some((cartProduct) =>
+						cartProduct.id.includes(id)
+					)
+				)
+				.map(({ id, price }) => {
+					const quantity = cartProducts.find(
+						(cartProduct) => id === cartProduct.id
+					).quantity;
+					return { quantity, price };
+				});
+
+			const subTotal = products.reduce(
+				(total, { quantity, price }) => total + price * quantity,
+				0
+			);
+
+			return subTotal;
+		};
+
+		setSubTotal(getSubTotal());
 	}, [allProducts, cartProducts]);
 
 	return (

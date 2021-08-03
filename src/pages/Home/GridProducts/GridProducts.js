@@ -14,38 +14,37 @@ const GridProducts = () => {
 	const isotope = useRef();
 	const gutter = 40;
 
-	const countCategories = () => {
-		return products.reduce((count, { category }) => {
-			category.map((cat) => (count[cat] = (count[cat] || 0) + 1));
-			return count;
-		}, {});
-	};
-
-	const initialIsotope = () => {
-		isotope.current = new Isotope('.grid', {
-			itemSelector: '.grid-item',
-			percentPosition: true,
-			masonry: {
-				gutter,
-				columnWidth: '.grid-item',
-			},
-		});
-		new imagesLoaded('.grid', () => isotope.current.layout());
-	};
-
-	const handelFilterCategory = () => {
-		filterCategory === '*'
-			? isotope.current.arrange({ filter: `*` })
-			: isotope.current.arrange({ filter: `.${filterCategory}` });
-	};
-
 	useEffect(() => {
+		const countCategories = () => {
+			return products.reduce((count, { category }) => {
+				category.map((cat) => (count[cat] = (count[cat] || 0) + 1));
+				return count;
+			}, {});
+		};
+		const initialIsotope = () => {
+			isotope.current = new Isotope('.grid', {
+				itemSelector: '.grid-item',
+				percentPosition: true,
+				masonry: {
+					gutter,
+					columnWidth: '.grid-item',
+				},
+			});
+			new imagesLoaded('.grid', () => isotope.current.layout());
+		};
+
 		setCountCategory(countCategories());
 		initialIsotope();
+
 		return () => isotope.current.destroy();
 	}, [products]);
 
 	useEffect(() => {
+		const handelFilterCategory = () => {
+			filterCategory === '*'
+				? isotope.current.arrange({ filter: `*` })
+				: isotope.current.arrange({ filter: `.${filterCategory}` });
+		};
 		handelFilterCategory();
 	}, [filterCategory]);
 

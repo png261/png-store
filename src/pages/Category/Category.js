@@ -9,13 +9,12 @@ const Category = () => {
 	const [categoryProducts, setCategoryProducts] = useState([]);
 	const allProducts = useGetAllProducts();
 
-	const getCategoryProducts = () => {
-		return allProducts.filter(({ category }) =>
-			categoryId === 'all' ? true : category.includes(categoryId)
-		);
-	};
-
 	useEffect(() => {
+		const getCategoryProducts = () => {
+			return allProducts.filter(({ category }) =>
+				categoryId === 'all' ? true : category.includes(categoryId)
+			);
+		};
 		setCategoryProducts(getCategoryProducts());
 	}, [allProducts, categoryId]);
 
