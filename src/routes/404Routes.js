@@ -4,7 +4,7 @@ import Loading from 'src/components/Loading/Loading';
 import { PATH } from 'src/constants/paths';
 const Page404 = lazy(() => import('src/pages/Page404/Page404'));
 
-const AboutRoutes = () => (
+const Routes = () => (
 	<Switch>
 		<Route exact path={PATH.PAGE404}>
 			<Suspense fallback={<Loading />}>
@@ -14,4 +14,4 @@ const AboutRoutes = () => (
 	</Switch>
 );
 
-export default AboutRoutes;
+export default Routes;
